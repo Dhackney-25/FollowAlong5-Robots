@@ -11,5 +11,30 @@ import mbot.*;
 
 @MBotLab(world = "parking")
 public class Stretch {
+        public static void main(String[] args) {
 
-}
+        /* Ada the rover
+true
+false
+Found the tape
+Ada the rover is parked
+        */
+
+            Rover ada = new Rover("Ada");
+
+            System.out.println(ada);
+
+            System.out.println(ada.somethingAhead(500));
+
+            System.out.println(ada.somethingAhead(5));
+
+            ada.driveToTape();
+
+            System.out.println("Found the tape");
+
+            ada.forward(30);
+
+            System.out.println(ada + " is parked");
+        }
+    }
+
