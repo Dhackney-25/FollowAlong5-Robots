@@ -11,5 +11,12 @@ package part21;
 // You will need to type the main method yourself. That is the point.
 
 public class Warmup {
+    public static void main(String[] args){
+        int completions = 2;
+        int attempts = 3;
+        System.out.println(completions / attempts * 100);
+        System.out.println(completions * 100 / attempts);
+        System.out.println(completions * 100.0 / attempts);
+    }
 
 }
