@@ -15,46 +15,75 @@ public class Challenge extends MBot2 {
 
     private Scanner scanner;
 
-    // Build the MBot2 part first (that is the super() line), then mount the scanner.
+    // Builds the MBot2 first, then connects the scanner.
     public Challenge() {
         super();
-        // YOUR CODE
+        scanner = new Scanner(this);
     }
 
-    // Done for you. Notice: readUltrasonic() and straight() are not written in this class.
-    // A Challenge IS AN MBot2, so it already has them.
+    // Drives forward until an object is within 20 cm.
     public int driveUntilBlocked() {
         int moves = 0;
+
         while (readUltrasonic() > 20) {
             straight(5);
             moves++;
         }
+
         return moves;
     }
 
-    // Scan ONCE. Give back the index (0 to 6) of the biggest distance.
-    // If two are equal, give back the smaller index.
+    // Scans once and returns the index with the greatest distance.
     public int openestIndex() {
-        return 0;   // YOUR CODE
+        double[] distances = scanner.scan();
+
+        int bestIndex = 0;
+
+        for (int i = 1; i < 7; i++) {
+            if (distances[i] > distances[bestIndex]) {
+                bestIndex = i;
+            }
+        }
+
+        return bestIndex;
     }
 
-    // Scan ONCE. Give back how many of the 7 distances are MORE than cm.
+    // Scans once and counts how many distances are greater than cm.
     public int countOpen(double cm) {
-        return 0;   // YOUR CODE
+        double[] distances = scanner.scan();
+
+        int count = 0;
+
+        for (int i = 0; i < 7; i++) {
+            if (distances[i] > cm) {
+                count++;
+            }
+        }
+
+        return count;
     }
 
-    // Turn the robot to face the direction the scanner looks at for this index.
-    // Scanner.ANGLES[index] is that angle: positive means turn LEFT that much,
-    // negative means turn RIGHT (by the same amount, without the minus), 0 means don't turn.
+    // Turns the robot toward the direction of the selected scanner index.
     public void turnToward(int index) {
-        // YOUR CODE
+        int angle = Scanner.ANGLES[index];
+
+        if (angle > 0) {
+            turnLeft(angle);
+        } else if (angle < 0) {
+            turnRight(-angle);
+        }
     }
 
-    // Find the way to the dead end at the Goal. Up to 10 times:
-    //   drive until blocked;
-    //   if NONE of the 7 directions is more than 60 cm away, you are at the dead end: stop (return);
-    //   otherwise turn toward the most open direction.
+    // Explores the maze until it reaches a dead end or completes 10 attempts.
     public void explore() {
-        // YOUR CODE
+        for (int i = 0; i < 10; i++) {
+            driveUntilBlocked();
+
+            if (countOpen(60) == 0) {
+                return;
+            }
+
+            turnToward(openestIndex());
+        }
     }
 }
