@@ -17,5 +17,16 @@ import mbot.*;
 
 @MBotLab(world = "wall-ahead")
 public class Warmup {
+        public static void main(String[] args) {
+            Chassis base = new Chassis();
+            Ultrasonic eyes = new Ultrasonic(base);
+            int moves = 0;
 
-}
+            while (eyes.distance() > 20) {
+                base.straight(5);
+                moves++;
+            }
+
+            System.out.println(moves);
+        }
+    }
