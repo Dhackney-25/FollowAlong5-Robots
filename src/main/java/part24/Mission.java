@@ -13,46 +13,27 @@ import mbot.*;
 public class Mission {
     // Runs a mission using any robot that extends MBot2.
     public static void mission(MBot2 bot) {
+            System.out.println("Mission start: " + bot);
 
-        // Prints a message when the mission begins.
-        System.out.println("Mission start");
+            bot.straight(40);
+            bot.turnLeft(90);
+            bot.straight(40);
+            bot.turnRight(90);
+            bot.straight(40);
+            bot.turnLeft(90);
 
-        // Runs the robot's run method.
-        bot.run();
-
-        // Prints a message when the mission is finished.
-        System.out.println("Mission done");
-    }
-
-    // Main method where the program starts.
-    public static void main(String[] args) {
-
-        // Chooses which robot will be used.
-        int pick = 1;
-
-        // Declares a variable that can hold an MBot2 robot.
-        MBot2 bot;
-
-        // Checks if pick is equal to 1.
-        if (pick == 1) {
-
-            // Creates a new CarefulBot.
-            bot = new CarefulBot();
-
-            // Checks if pick is equal to 2.
-        } else if (pick == 2) {
-
-            // Creates a new FlashyBot.
-            bot = new FlashyBot();
-
-            // Runs if pick is not 1 or 2.
-        } else {
-
-            // Creates a regular MBot2 robot.
-            bot = new MBot2();
+            System.out.println("Mission done: " + bot);
         }
 
-        // Starts the mission using the selected robot.
-        mission(bot);
+        public static void main (String[]args){
+            int pick = 1;
+
+            if (pick == 1) {
+                mission(new CarefulBot());
+            } else if (pick == 2) {
+                mission(new FlashyBot());
+            } else {
+                mission(new MBot2());
+            }
+        }
     }
-}

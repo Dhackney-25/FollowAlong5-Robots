@@ -14,43 +14,24 @@ import mbot.*;
 //    saying in YOUR OWN WORDS what that line does.
 
 public class CarefulBot extends MBot2 {
-    // Constructor that creates a new CarefulBot.
-    public CarefulBot() {
+    private int refused;
 
-        // Calls the constructor of the parent MBot2 class.
+    public CarefulBot() {
         super();
     }
 
-    // Overrides the straight method from MBot2.
     @Override
     public void straight(double cm) {
-
-        // Checks if the distance ahead is greater than the requested distance plus 20 cm.
-        if (readUltrasonic() > cm + 20) {
-
-            // Moves the robot forward the requested distance.
+        if (readUltrasonic() > cm) {
             super.straight(cm);
-
-            // Runs if there is not enough space to move safely.
         } else {
-
-            // Turns the first LED red to warn that the robot cannot move.
-            turnLedOn(1, 255, 0, 0);
-
-            // Prints a message explaining why the robot did not move.
+            refused++;
             System.out.println("CarefulBot: not driving " + cm + " cm, too close");
         }
     }
 
-    // Overrides the run method from MBot2.
     @Override
-    public void run() {
-
-        // Repeats the movement five times.
-        for (int i = 0; i < 5; i++) {
-
-            // Attempts to move forward 40 cm safely.
-            straight(40);
-        }
+    public String toString() {
+        return "CarefulBot (refused " + refused + " moves)";
     }
 }
